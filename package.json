@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "using sql connecting the database",
   "main": "sql.js",
+  "engines": {
+    "node": "v20.15.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=Production DATA_BASE_NAME=test STRIPE_KEY=sk_test_51Q3AjLHVasJXgPybljzndBKZsfCytjDeLcauC8yQ9z8CT0HkTn7AcGPKig0OQdz8WupIr9n7GziuPHhto8qytDxp00zeKa5GwC nodemon mongoose.js",
