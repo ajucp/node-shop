@@ -91,8 +91,8 @@ app.use(helmet());                  //calling the helmet functn
 app.use(compression());             //calling the compression funtn
 app.use(morgan('combined',{stream:accessLogStream}));           //logging the information
 //create to key 
-const privateKey=fs.readFileSync('server.key')      //import the key from file
-const certificateKey=fs.readFileSync('server.cert') //importing the certificate and call that  in the server
+// const privateKey=fs.readFileSync('server.key')      //import the key from file
+// const certificateKey=fs.readFileSync('server.cert') //importing the certificate and call that  in the server
 
 app.use((req,res,next)=>{ 
     // throw new Error('sync error')
@@ -149,8 +149,8 @@ app.use('',errorController.getError404);
 
 mongoose.connect(MOngoDB_URI)
 .then(result=>{
-    // app.listen(process.env.PORT||3000);
-    https.createServer({key:privateKey,cert:certificateKey},app).listen(process.env.PORT||3000)
+    app.listen(process.env.PORT||3000);
+    // https.createServer({key:privateKey,cert:certificateKey},app).listen(process.env.PORT||3000)
 })
 .catch(err=>{
     console.log(err)
