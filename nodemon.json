@@ -1,0 +1,6 @@
+{
+    "env":{
+        "DATA_BASE_NAME":"test",
+        "STRIPE_KEY":"sk_test_51Q3AjLHVasJXgPybljzndBKZsfCytjDeLcauC8yQ9z8CT0HkTn7AcGPKig0OQdz8WupIr9n7GziuPHhto8qytDxp00zeKa5GwC"
+    }
+}
