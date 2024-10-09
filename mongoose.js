@@ -20,10 +20,9 @@ const authRoutes = require('./routes/auth');
 const helmet=require('helmet');//import helmet for securing the headers
 const compression=require('compression');//to compress the page size of any thing in the web
 const morgan=require('morgan');     //for logging
-// const MOngoDB_URI = `mongodb+srv://ajmalcp:B6R8YggMuUfU3WQm@cluster0.98nsj.mongodb.net/node-shop?retryWrites=true&w=majority`;
-
-const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`
-
+const MOngoDB_URI=`mongodb://localhost:27017/shop`
+// const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`;
+// const MOngoDB_URI=`mongodb://ajmalcp:AuJT5T4gmA4kLiNT@cluster0-shard-00-00.98nsj.mongodb.net:27017`
 const app=express();
 console.log('User:', process.env.MONGO_USER);
 console.log('Password:', process.env.MONGO_PASSWORD);
@@ -153,9 +152,9 @@ app.use('',errorController.getError404);
 
 //connecting the mongoose
 
-mongoose.connect(MOngoDB_URI)
+mongoose.connect(MOngoDB_URI )
 .then(result=>{
-    app.listen(process.env.PORT||3000);
+    app.listen(process.env.PORT||5000);
     // https.createServer({key:privateKey,cert:certificateKey},app).listen(process.env.PORT||3000)
 })
 .catch(err=>{
