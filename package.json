@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=Production DATA_BASE_NAME=test STRIPE_KEY=sk_test_51Q3AjLHVasJXgPybljzndBKZsfCytjDeLcauC8yQ9z8CT0HkTn7AcGPKig0OQdz8WupIr9n7GziuPHhto8qytDxp00zeKa5GwC nodemon mongoose.js",
+    "start": "cross-env NODE_ENV=Production MONGO_USER=ajmalcp MONGO_PASSWORD=B6R8YggMuUfU3WQm MONGO_DB_NAME=node-shop STRIPE_KEY=sk_test_51Q3AjLHVasJXgPybljzndBKZsfCytjDeLcauC8yQ9z8CT0HkTn7AcGPKig0OQdz8WupIr9n7GziuPHhto8qytDxp00zeKa5GwC node mongoose.js",
+    "start-server":"node app.js",
     "start:dev": "nodemon app.js"
   },
   "author": "ajucp",

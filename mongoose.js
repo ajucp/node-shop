@@ -20,9 +20,15 @@ const authRoutes = require('./routes/auth');
 const helmet=require('helmet');//import helmet for securing the headers
 const compression=require('compression');//to compress the page size of any thing in the web
 const morgan=require('morgan');     //for logging
+// const MOngoDB_URI = `mongodb+srv://ajmalcp:B6R8YggMuUfU3WQm@cluster0.98nsj.mongodb.net/node-shop?retryWrites=true&w=majority`;
 
-const MOngoDB_URI=`mongodb://127.0.0.1:27017/${process.env.DATA_BASE_NAME}`
+const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`
+
 const app=express();
+console.log('User:', process.env.MONGO_USER);
+console.log('Password:', process.env.MONGO_PASSWORD);
+console.log('Database Name:', process.env.MONGO_DB_NAME);
+
 //for storing the session we need to add the constructor here
 const storeSession=new mongodbStore({
     uri:MOngoDB_URI,
