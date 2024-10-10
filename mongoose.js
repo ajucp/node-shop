@@ -5,7 +5,6 @@ const express=require('express');
 const https=require('https');       //importing the https server for securing
 
 const mongoose=require('mongoose');
-const MongoDBStore = require('connect-mongodb-session')(require('express-session'));
 // const cookieParser = require("cookie-parser");
 const session=require('express-session');
 const bodyParser=require('body-parser');
@@ -24,7 +23,7 @@ const morgan=require('morgan');     //for logging
 
 // const MOngoDB_URI=`mongodb+srv://ajucp:5WZifQn3iwl4oHqx@cluster0.98nsj.mongodb.net/node-shop?retryWrites=true&w=majority`;
 // const MOngoDB_URI = `mongodb+srv://ajucp:5WZifQn3iwl4oHqx@cluster0.98nsj.mongodb.net/node-shop?retryWrites=true&w=majority`;
-const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority&ssl=true`;
+// const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
 
 // const MOngoDB_URI = `mongodb+srv://ajmalcp:AuJT5T4gmA4kLiNT@cluster0.mongodb.net/node-shop?retryWrites=true&w=majority`;
 
@@ -102,8 +101,8 @@ app.use(helmet());                  //calling the helmet functn
 app.use(compression());             //calling the compression funtn
 app.use(morgan('combined',{stream:accessLogStream}));           //logging the information
 //create to key 
- const privateKey=fs.readFileSync('server.key')      //import the key from file
- const certificateKey=fs.readFileSync('server.cert') //importing the certificate and call that  in the server
+//  const privateKey=fs.readFileSync('server.key')      //import the key from file
+//  const certificateKey=fs.readFileSync('server.cert') //importing the certificate and call that  in the server
 
 app.use((req,res,next)=>{ 
     // throw new Error('sync error')
@@ -157,7 +156,7 @@ app.use('',errorController.getError404);
 
 
 //connecting the mongoose
-new MongoDBStore({
+new mongodbStore({
     uri: MOngoDB_URI,
     collection: 'sessions',
     connectionOptions: {
@@ -173,8 +172,8 @@ mongoose
 
 // mongoose.connect(MOngoDB_URI )
 .then(result=>{
-    // app.listen(process.env.PORT||5000);
-    https.createServer({key:privateKey,cert:certificateKey},app).listen(process.env.PORT||3000)
+    app.listen(process.env.PORT||5000);
+    // https.createServer({key:privateKey,cert:certificateKey},app).listen(process.env.PORT||3000)
 })
 .catch(err=>{
     console.log(err)
