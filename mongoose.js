@@ -1,9 +1,7 @@
 const path=require('path');
 const fs=require('fs');
 const express=require('express');
-//import mongoose here no need of supperate file for that
-const https=require('https');       //importing the https server for securing
-
+// const https=require('https');       //importing the https server for securing
 const mongoose=require('mongoose');
 // const cookieParser = require("cookie-parser");
 const session=require('express-session');
@@ -13,7 +11,6 @@ const csrf=require('csurf');
 const flash=require('connect-flash');//importing the flash message here
 const errorController=require('./controllers/error404');
 const multer=require('multer');
-
 const adminRoutes=require('./routes/admin');
 const shopRoutes=require('./routes/shop');
 const authRoutes = require('./routes/auth');
@@ -21,16 +18,11 @@ const helmet=require('helmet');//import helmet for securing the headers
 const compression=require('compression');//to compress the page size of any thing in the web
 const morgan=require('morgan');     //for logging
 
-
-const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
-
-
-
+const MOngoDB_URI=`mongodb://localhost:27017/test`
+// const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`;
 
 const app=express();
-// console.log('User:', process.env.MONGO_USER);
-// console.log('Password:', process.env.MONGO_PASSWORD);
-// console.log('Database Name:', process.env.MONGO_DB_NAME);
+
 
 //for storing the session we need to add the constructor here
 const storeSession=new mongodbStore({
@@ -99,6 +91,9 @@ const accessLogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{fl
 app.use(helmet());                  //calling the helmet functn
 app.use(compression());             //calling the compression funtn
 app.use(morgan('combined',{stream:accessLogStream}));           //logging the information
+
+
+
 //create to key 
 //  const privateKey=fs.readFileSync('server.key')      //import the key from file
 //  const certificateKey=fs.readFileSync('server.cert') //importing the certificate and call that  in the server
@@ -154,7 +149,7 @@ app.use('',errorController.getError404);
 
 
 
-//connecting the mongoose
+// connecting the mongoose
 new mongodbStore({
     uri: MOngoDB_URI,
     collection: 'sessions',
@@ -166,8 +161,7 @@ new mongodbStore({
 
 
 
-mongoose
-    .connect(MOngoDB_URI)
+mongoose.connect(MOngoDB_URI)
 
 // mongoose.connect(MOngoDB_URI )
 .then(result=>{

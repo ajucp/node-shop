@@ -2,7 +2,7 @@ const mongodb=require('mongodb');
 const fileHelper=require('../util/file');
 const Product=require("../models/product");
 const {validationResult}=require("express-validator");
-const product = require('../models/product');
+
 
 exports.getAddproducts=(req,res,next)=>{
     res.render('admin/edit-product',{
