@@ -5,6 +5,7 @@ const express=require('express');
 const https=require('https');       //importing the https server for securing
 
 const mongoose=require('mongoose');
+const MongoDBStore = require('connect-mongodb-session')(require('express-session'));
 // const cookieParser = require("cookie-parser");
 const session=require('express-session');
 const bodyParser=require('body-parser');
@@ -20,13 +21,18 @@ const authRoutes = require('./routes/auth');
 const helmet=require('helmet');//import helmet for securing the headers
 const compression=require('compression');//to compress the page size of any thing in the web
 const morgan=require('morgan');     //for logging
-const MOngoDB_URI=`mongodb://localhost:27017/shop`
-// const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`;
-// const MOngoDB_URI=`mongodb://ajmalcp:AuJT5T4gmA4kLiNT@cluster0-shard-00-00.98nsj.mongodb.net:27017`
+
+// const MOngoDB_URI=`mongodb+srv://ajucp:5WZifQn3iwl4oHqx@cluster0.98nsj.mongodb.net/node-shop?retryWrites=true&w=majority`;
+const MOngoDB_URI = `mongodb+srv://ajucp:5WZifQn3iwl4oHqx@cluster0.98nsj.mongodb.net/node-shop?retryWrites=true&w=majority`;
+
+
+// const MOngoDB_URI = `mongodb+srv://ajmalcp:AuJT5T4gmA4kLiNT@cluster0.mongodb.net/node-shop?retryWrites=true&w=majority`;
+
+
 const app=express();
-console.log('User:', process.env.MONGO_USER);
-console.log('Password:', process.env.MONGO_PASSWORD);
-console.log('Database Name:', process.env.MONGO_DB_NAME);
+// console.log('User:', process.env.MONGO_USER);
+// console.log('Password:', process.env.MONGO_PASSWORD);
+// console.log('Database Name:', process.env.MONGO_DB_NAME);
 
 //for storing the session we need to add the constructor here
 const storeSession=new mongodbStore({
@@ -38,7 +44,7 @@ const storeSession=new mongodbStore({
 console.log(process.env.NODE_ENV);
 
 const User=require('./models/user');
-const { error } = require('console');
+
 const csrfProtection=csrf()
 
 app.set('view engine','ejs');   
@@ -96,8 +102,8 @@ app.use(helmet());                  //calling the helmet functn
 app.use(compression());             //calling the compression funtn
 app.use(morgan('combined',{stream:accessLogStream}));           //logging the information
 //create to key 
-// const privateKey=fs.readFileSync('server.key')      //import the key from file
-// const certificateKey=fs.readFileSync('server.cert') //importing the certificate and call that  in the server
+//  const privateKey=fs.readFileSync('server.key')      //import the key from file
+//  const certificateKey=fs.readFileSync('server.cert') //importing the certificate and call that  in the server
 
 app.use((req,res,next)=>{ 
     // throw new Error('sync error')
@@ -151,8 +157,21 @@ app.use('',errorController.getError404);
 
 
 //connecting the mongoose
+new MongoDBStore({
+    uri: MOngoDB_URI,
+    collection: 'sessions',
+    connectionOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    },
+});
 
-mongoose.connect(MOngoDB_URI )
+
+
+mongoose
+    .connect(MOngoDB_URI)
+
+// mongoose.connect(MOngoDB_URI )
 .then(result=>{
     app.listen(process.env.PORT||5000);
     // https.createServer({key:privateKey,cert:certificateKey},app).listen(process.env.PORT||3000)
