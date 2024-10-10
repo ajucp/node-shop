@@ -18,7 +18,9 @@ const helmet=require('helmet');//import helmet for securing the headers
 const compression=require('compression');//to compress the page size of any thing in the web
 const morgan=require('morgan');     //for logging
 
-const MOngoDB_URI=`mongodb://localhost:27017/test`
+
+const MOngoDB_URI=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.98nsj.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`;
+
 const app=express();
 
 
